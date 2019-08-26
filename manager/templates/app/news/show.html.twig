@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}News{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('news') }}">News</a></li>
+        <li class="breadcrumb-item active">{{ news.content.title }}</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ news.content.title }}</h1>
+    <h5>{{ news.source.name }} - <a href="{{ news.link }}">{{ news.link }}</a></h5>
+    <div class="mb-4">
+       {{news.content.description }}
+    </div>
+
+    {% for file in news.files %}
+       <img src="{{ storage_path(file.info.path ~ '/' ~ file.info.name) }}" alt="{{ news.content.title }}">
+    {% endfor %}
+
+{% endblock %}

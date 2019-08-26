@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}News{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item active">News</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-body">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-2">{{ form_widget(form.title) }}</div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <a href="{{ path('news') }}" class="btn btn-outline-secondary">Reset</a>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <div class="box">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'Ttitle', 'content_title') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Date', 'date') }}</th>
+                <th>Source</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for news in pagination %}
+                <tr>
+                    <td><a href="{{ path('news.show', {'id': news.id}) }}">{{ news.content_title }}</a></td>
+                    <td>{{ news.date }}</td>
+                    <td>{{ news.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+{% endblock %}
